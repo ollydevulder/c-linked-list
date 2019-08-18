@@ -1,19 +1,28 @@
-#include <stdio.h>
-#include <stdlib.h>
+/* 
+	This header contains:
+		struct Node { value, next }
+		createNode()
+		destroyList( head )
+		addNode( head, value )
+		getValueByIndex( head, index )
+		printList( head )
+
+*/
+
 
 struct Node {
-	int value;
-	struct Node *next;
+	int value; 
+	struct Node *next; // pointer to the next Node
 };
 
 struct Node * createNode() {
-	struct Node *node = malloc(sizeof(struct Node));
-	node->value = 0;
+	struct Node *node = malloc(sizeof(struct Node)); // allocate mem for new Node
+	node->value = 0; 
 	node->next = NULL;
 	return node;
 }
 
-void destroyList(struct Node *head) {
+void destroyList(struct Node *head) { // free the allocated memory for all Nodes in list
 	struct Node *c, *n;
 	do {
 		n = c->next;
@@ -24,15 +33,15 @@ void destroyList(struct Node *head) {
 
 struct Node * addNode(struct Node *head, int value){
 	struct Node *temp, *p;
-    temp = createNode();
+    temp = createNode(); // get pointer to new Node
     temp->value = value;
-    if (head == NULL) {
+    if (head == NULL) { // empty list
         head = temp;
     } else {
         p = head;
         while (p->next != NULL) {
             p = p->next;
-        }
+        } // get to end of list
         p->next = temp;
     }
 	return head;
@@ -46,7 +55,7 @@ int getValueByIndex(struct Node *head, int index) {
 		i++;
 		node = node->next;
 	}
-	return -1; // Its not in there, oof
+	return -1; // index is too great
 }
 
 void printList(struct Node *head) {
@@ -60,12 +69,3 @@ void printList(struct Node *head) {
 	printf("%d ]\n", node->value);
 }
 
-int main(int argc, char *argv[]) {
-	struct Node *list = createNode();
-	list->value = 0;
-	for (int i=1; i<10; i++) { addNode(list, i*2); }
-
-	printList(list);
-	destroyList(list);
-	return 0;
-}
