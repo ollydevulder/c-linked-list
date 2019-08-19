@@ -3,16 +3,18 @@
 #include "linked_list.h"
 
 int main(int argc, char *argv[]) {
-	struct Node *list = createNode(); // create head Node
-	list->value = 0; // set the value of [0] to 0
+	// first get the head node, this acts as the array
+	struct Node *array = addNode(NULL, 21);
+	// we can add more nodes
+	addNode(array, 10);
+	addNode(array, 42);
+	// we can display the array...
+	printArray(array);
+	// ...and get value by index
+	printf("[1] -> %d\n", getValue(array, 1));
 
-	for (int i=1; i<11; i++) {
-		addNode(list, i*2); // add 10 more Nodes
-	}
-
-	printList(list); // print the array
-
-	destroyList(list); // clear memory
+	// important! array must be cleared from memory after use
+	destroyArray(array);
 
 	return 0;
 }

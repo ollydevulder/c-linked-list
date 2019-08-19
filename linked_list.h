@@ -4,7 +4,7 @@
 		createNode()
 		destroyList( head )
 		addNode( head, value )
-		getValueByIndex( head, index )
+		getValue( head, index )
 		printList( head )
 
 */
@@ -24,11 +24,12 @@ struct Node * createNode() {
 
 void destroyList(struct Node *head) { // free the allocated memory for all Nodes in list
 	struct Node *c, *n;
+	c = head;
 	do {
 		n = c->next;
 		free(c);
 		c = n;
-		} while (c != NULL);
+	} while (c != NULL);
 }
 
 struct Node * addNode(struct Node *head, int value){
@@ -47,7 +48,7 @@ struct Node * addNode(struct Node *head, int value){
 	return head;
 }
 
-int getValueByIndex(struct Node *head, int index) {
+int getValue(struct Node *head, int index) { // serach through array and return index value
 	int i=0;
 	struct Node *node = head;
 	while (node->next != NULL) {
