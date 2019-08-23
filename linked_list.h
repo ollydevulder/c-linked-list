@@ -69,4 +69,3 @@ void printList(struct Node *head) {
 	}
 	printf("%d ]\n", node->value);
 }
-
