@@ -51,7 +51,7 @@ struct Node * addNode(struct Node *head, int value){
 int getValue(struct Node *head, int index) { // serach through array and return index value
 	int i=0;
 	struct Node *node = head;
-	while (node->next != NULL) {
+	while (node != NULL) {
 		if (i == index) { return node->value;}
 		i++;
 		node = node->next;
