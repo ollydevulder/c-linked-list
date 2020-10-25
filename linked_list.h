@@ -1,71 +1,72 @@
-/* 
-	This header contains:
-		struct Node { value, next }
-		createNode()
-		destroyList( head )
-		addNode( head, value )
-		getValue( head, index )
-		printList( head )
-
-*/
-
-
 struct Node {
-	int value; 
-	struct Node *next; // pointer to the next Node
+    int value;
+    struct Node *next;
 };
 
-struct Node * createNode() {
-	struct Node *node = malloc(sizeof(struct Node)); // allocate mem for new Node
-	node->value = 0; 
-	node->next = NULL;
-	return node;
+
+struct Node * createList()
+{
+    struct Node *node = malloc(sizeof(struct Node));
+    node->value = -1;
+    node->next = NULL;
+    return node;
 }
 
-void destroyList(struct Node *head) { // free the allocated memory for all Nodes in list
-	struct Node *c, *n;
-	c = head;
-	do {
-		n = c->next;
-		free(c);
-		c = n;
-	} while (c != NULL);
+struct Node * getTail(struct Node *head)
+{
+    struct Node *node = head;
+    while (node->next)
+        node = node->next;
+    return node;
 }
 
-struct Node * addNode(struct Node *head, int value){
-	struct Node *temp, *p;
-    temp = createNode(); // get pointer to new Node
-    temp->value = value;
-    if (head == NULL) { // empty list
-        head = temp;
+struct Node * addNode(struct Node *head, int value)
+{
+    if (head && head->value == -1 && head->next==NULL)
+    {
+        head->value = value;
     } else {
-        p = head;
-        while (p->next != NULL) {
-            p = p->next;
-        } // get to end of list
-        p->next = temp;
+        struct Node *node = createList();
+        node->value = value;
+        if (head)
+            getTail(head)->next = node;
     }
-	return head;
+    return head;
 }
 
-int getValue(struct Node *head, int index) { // serach through array and return index value
-	int i=0;
-	struct Node *node = head;
-	while (node != NULL) {
-		if (i == index) { return node->value;}
-		i++;
-		node = node->next;
-	}
-	return -1; // index is too great
+struct Node * getNode(struct Node *head, int index)
+{
+    int i;
+    struct Node *node = head;
+    for (i = 0; i < index && node!=NULL; i++)
+        node = node->next;
+    return node;
 }
 
-void printList(struct Node *head) {
-	struct Node *node;
-	node = head;
-	printf("[ ");
-	while (node->next != NULL) {
-		printf("%d, ", node->value);
-		node = node->next;
-	}
-	printf("%d ]\n", node->value);
+void clearList(struct Node *head)
+{
+    struct Node *node, *temp;
+    node = head;
+    while (node!=NULL)
+    {
+        temp = node->next;
+        free(node);
+        node = temp;
+    }
 }
+
+void printList(struct Node *head)
+{
+    int i;
+    struct Node *temp;
+    printf("[");
+    for (i = 0; getNode(head, i)!=NULL; i++)
+    {
+        temp = getNode(head, i);
+        printf("%d", temp->value);
+        if (temp->next)
+            printf(", ");
+    }
+    printf("]\n");
+}
+
